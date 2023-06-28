@@ -28,14 +28,20 @@ def dir_encryption(dir_path: str, password: str, output_dir: str = None, buffer_
     logging.info(
         f"Starting to encrypt directory: {dir_path}",
     )
-    
+
     for name in os.listdir(dir_path):
         path = os.path.join(dir_path, name)
 
         if os.path.isfile(path):
-            file_encryption(path, password, output_dir, buffer_size)
+            try:
+                file_encryption(path, password, output_dir, buffer_size)
+            except Exception as e:
+                print(f"Problem with file: {path}, can't encrypt, cause: {e}")
         else:
-            output = os.path.join(dir_path if output_dir is None else output_dir, name)
+            output = os.path.join(
+                dir_path if output_dir is None else output_dir, name
+            )
+            
             if not os.path.exists(output):
                 os.mkdir(output)
 

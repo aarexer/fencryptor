@@ -1,11 +1,7 @@
 import click
-import encyptor
-import decryptor
+import encyptor as encyptor
+import decryptor as decryptor
 import click
-import logging
-
-logging.basicConfig(level=logging.INFO, filename="codec.log", filemode="w",
-                    format="%(asctime)s %(levelname)s %(message)s")
 
 
 @click.group
@@ -28,11 +24,11 @@ def codec():
 @click.argument("input", type=click.Path(exists=True))
 @click.argument("password")
 def decrypt(input, password, buffer_size):
-    logging.info(f"Starting decryption...")
+    print(f"Starting decryption...")
 
     decryptor.decryption(input, password, buffer_size)
 
-    logging.info(f"Decrypted!")
+    print(f"Decryption finished")
 
 
 @click.command()
@@ -51,11 +47,11 @@ def decrypt(input, password, buffer_size):
 @click.argument("input", type=click.Path(exists=True))
 @click.argument("password")
 def encrypt(input, password, output, buffer_size):
-    logging.info(f"Starting encryption...")
-    
+    print(f"Starting encryption...")
+
     encyptor.encryption(input, password, output, buffer_size)
-    
-    logging.info(f"Encrypted!")
+
+    print(f"Encryption finished!")
 
 
 codec.add_command(encrypt)
